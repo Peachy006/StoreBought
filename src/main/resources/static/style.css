@@ -26,6 +26,7 @@ body {
     position: relative;
     overflow: hidden;
     display: flex;
+    justify-content: center;
 }
 
 #cookieArea {
