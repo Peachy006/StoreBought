@@ -12,7 +12,7 @@ interface GameState {
 
 
 let gameState: GameState = {
-    //Saves amount players has bought.
+    //Saves the amount players have bought.
     inventory: {
         "hands": 0,
         "loom": 0,
