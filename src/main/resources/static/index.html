@@ -10,10 +10,10 @@
     <div id="leftColumn">
         <div style="margin-top: 40px; text-align: center;">
             <div style="font-size: 48px; font-weight: bold; margin-bottom: 15px; text-align: center;">
-                1,234 coins
+                <span>0</span> coins
             </div>
             <div style="font-size: 20px; margin-bottom: 20px; text-align: center;">
-                +25 per second
+                <span>0</span> per second
             </div>
             <div style="font-size: 16px; text-align: center;">
                 Sample text goes here
@@ -24,7 +24,7 @@
     <div id="rightColumn">
         <div class="store-header">Store</div>
         <div id="products">
-            <div class="product locked" data-product="hands">
+            <div class="product locked" data-product="hands" onClick="handlePurchasing('hands')">
                 <div class="product-icon">👆</div>
                 <div class="product-info">
                     <div class="product-name">Hands</div>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="product-owned">0</div>
             </div>
-            <div class="product locked" data-product="loom">
+            <div class="product locked" data-product="loom" onClick="handlePurchasing('loom')">
                 <div class="product-icon">👵</div>
                 <div class="product-info">
                     <div class="product-name">Loom</div>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="product-owned">0</div>
             </div>
-            <div class="product locked" data-product="coal-cart">
+            <div class="product locked" data-product="coal-cart" onClick="handlePurchasing('coal-cart')">
                 <div class="product-icon">👵</div>
                 <div class="product-info">
                     <div class="product-name">Coal Cart</div>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="product-owned">0</div>
             </div>
-            <div class="product locked" data-product="steam-engine">
+            <div class="product locked" data-product="steam-engine" onClick="handlePurchasing('steam-engine')">
                 <div class="product-icon">👵</div>
                 <div class="product-info">
                     <div class="product-name">Steam Engine</div>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="product-owned">0</div>
             </div>
-            <div class="product locked" data-product="factory">
+            <div class="product locked" data-product="factory" onClick="handlePurchasing('factory')">
                 <div class="product-icon">👵</div>
                 <div class="product-info">
                     <div class="product-name">Factory</div>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="product-owned">0</div>
             </div>
-            <div class="product locked" data-product="factory-worker">
+            <div class="product locked" data-product="factory-worker" onClick="handlePurchasing('factory-worker')">
                 <div class="product-icon">👵</div>
                 <div class="product-info">
                     <div class="product-name">Factory Worker</div>
@@ -72,7 +72,7 @@
                 </div>
                 <div class="product-owned">0</div>
             </div>
-            <div class="product locked" data-product="religion">
+            <div class="product locked" data-product="religion" onClick="handlePurchasing('religion')">
                 <div class="product-icon">👵</div>
                 <div class="product-info">
                     <div class="product-name">Religion</div>
@@ -108,5 +108,6 @@
     // Initialize visual effects
     createSnowflakes();
 </script>
+<script src="game.js"></script>
 </body>
 </html>

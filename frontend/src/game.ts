@@ -1,5 +1,9 @@
 
 
+//TODO make money on click
+//TODO add economy
+//TODO check if you can afford upgrades
+//TODO remove money when buying
 
 interface GameState {
     inventory: Record<string, number>;

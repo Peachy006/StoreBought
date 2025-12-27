@@ -100,7 +100,6 @@ body {
 
 .product.locked {
     opacity: 0.5;
-    cursor: not-allowed;
 }
 
 .product-icon {
