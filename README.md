@@ -1,0 +1,1 @@
+to run this program, through a terminal enter the frontend folder and run "npm run watch" and then run the intelliJ project, the watch command will compile the ts into js into the static folder allowing the program to run
