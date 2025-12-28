@@ -4,6 +4,8 @@
 //TODO add economy
 //TODO check if you can afford upgrades
 //TODO remove money when buying
+//TODO make it so that when buying upgrades it doesnt copy the text
+//TODO trigger ethical choice when buying factory
 
 interface GameState {
     karma: number; // -1 for ethically wrong decision, +1 for good decision
