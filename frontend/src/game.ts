@@ -6,19 +6,39 @@
 //TODO remove money when buying
 //TODO make it so that when buying upgrades it doesnt copy the text
 //TODO trigger ethical choice when buying factory
+//TODO add ethical choice popup
 
 interface GameState {
-    karma: number; // -1 for ethically wrong decision, +1 for good decision
+    // -1 for ethically wrong decision, +1 for good decision
+    karma: number;
+    money: number;
+    cookiesPerClick: number;
     inventory: Record<string, number>;
-    basePrices: Record<string, number>;
     baseIncome: Record<string, number>;
+    multipliers: Record<string, number>;
+
 }
 
 
-let gameState: GameState = {
+const ITEM_CONFIG: Record<string, { price: number}> = {
+    "hands": { price: 15  },
+    "loom": { price: 100  },
+    "coal-cart": { price: 500 },
+    "steam-engine": { price: 2500 },
+    "factory": { price: 10000 },
+    "factory-worker": { price: 5000 },
+    "child-worker": { price: 5000 },
+    "car-production": { price: 10000 },
+};
 
+
+
+
+let gameState: GameState = {
+    cookiesPerClick: 1,
+    money: 0,
     karma: 0,
-    //Saves the amount of products players have bought.
+
     inventory: {
         "hands": 0,
         "loom": 0,
@@ -28,18 +48,6 @@ let gameState: GameState = {
         "factory-worker": 0,
         "child-worker": 0,
         "car-production": 0,
-    },
-
-    basePrices: {
-        //Saves basePrice of product when you buy it for the first time
-        "hands": 15,
-        "loom": 100,
-        "coal-cart": 500,
-        "steam-engine": 2500,
-        "factory": 10000,
-        "factory-worker": 5000,
-        "child-worker": 5000,
-        "car-production": 10000
     },
 
     baseIncome: {
@@ -53,6 +61,17 @@ let gameState: GameState = {
         "child-worker": 7500,
         "car-production": 10000,
     },
+    multipliers: {
+        "hands": 1,
+        "loom": 1,
+        "coal-cart": 1,
+        "steam-engine": 1,
+        "factory": 1,
+        "factory-worker": 1,
+        "child-worker": 1,
+        "car-production": 1,
+    },
+
 };
 //inventory
 //basePrices
@@ -81,7 +100,7 @@ function handlePurchasing(itemName: string): void {
 }
 
 function getNextPrice(itemKey: string): number {
-    const base = gameState.basePrices[itemKey];
+    const base = ITEM_CONFIG[itemKey].price;
     const amountOwned = gameState.inventory[itemKey];
 
     // 1.15 is your 15% increase
@@ -94,5 +113,17 @@ function unlockUpgrade(upgradeName: string): void {
     let thingy = document.querySelector(`[data-upgrade="${upgradeName}"]`) as HTMLElement;
     if(thingy) {
         thingy.style.display = "flex";
+    }
+}
+
+function earnMoneyOnClick(): void{
+    gameState.money += gameState.inventory["hands"] * gameState.multipliers["hands"];
+    updateDisplay();
+}
+
+function updateDisplay() {
+    let element = document.getElementById("money-display");
+    if(element) {
+        element.textContent = String(gameState.money);
     }
 }

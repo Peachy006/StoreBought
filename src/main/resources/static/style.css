@@ -27,6 +27,8 @@ body {
     overflow: hidden;
     display: flex;
     justify-content: center;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 #cookieArea {
@@ -90,7 +92,14 @@ body {
     align-items: center;
     cursor: pointer;
     transition: all 0.2s;
+    user-select: none;
+    -webkit-user-drag: none;
 }
+
+.product:active {
+    transform: scale(0.98);
+}
+
 
 .product:hover {
     background: linear-gradient(135deg, #4a6a7a 0%, #3a5a6a 100%);
