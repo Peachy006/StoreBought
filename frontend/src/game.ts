@@ -8,28 +8,13 @@
 
 interface GameState {
     // -1 for ethically wrong decision, +1 for good decision
-    karma: number;
-    money: number;
     cookiesPerClick: number;
-    inventory: Record<string, number>;
-    baseIncome: Record<string, number>;
-    multipliers: Record<string, number>;
+    money: number;
+    karma: number;
 
+    
+    ITEMS: Record<string, { basePrice: number, income: number, amount: number, nextPrice: number, baseIncome: number, multiplier: number}>;
 }
-
-
-const ITEM_CONFIG: Record<string, { price: number}> = {
-    "hands": { price: 15  },
-    "loom": { price: 100  },
-    "coal-cart": { price: 500 },
-    "steam-engine": { price: 2500 },
-    "factory": { price: 10000 },
-    "factory-worker": { price: 5000 },
-    "child-worker": { price: 5000 },
-    "car-production": { price: 10000 },
-};
-
-
 
 
 let gameState: GameState = {
@@ -37,55 +22,38 @@ let gameState: GameState = {
     money: 0,
     karma: 0,
 
-    inventory: {
-        "hands": 0,
-        "loom": 0,
-        "coal-cart": 0,
-        "steam-engine": 0,
-        "factory": 0,
-        "factory-worker": 0,
-        "child-worker": 0,
-        "car-production": 0,
-    },
-
-    baseIncome: {
-        //Saves income from products
-        "hands": 1,
-        "loom": 5,
-        "coal-cart": 10,
-        "steam-engine": 100,
-        "factory": 1000,
-        "factory-worker": 5000,
-        "child-worker": 7500,
-        "car-production": 10000,
-    },
-    multipliers: {
-        "hands": 1,
-        "loom": 1,
-        "coal-cart": 1,
-        "steam-engine": 1,
-        "factory": 1,
-        "factory-worker": 1,
-        "child-worker": 1,
-        "car-production": 1,
-    },
+    //things that can change
+    
+    ITEMS: {
+        "hands": { basePrice: 15, income: 1, amount: 1, nextPrice: 1, baseIncome: 1, multiplier: 1},
+        "loom": { basePrice: 100, income: 5, amount: 1, nextPrice: 5, baseIncome: 5, multiplier: 1},
+        "coal-cart": { basePrice: 500, income: 10, amount: 1, nextPrice: 10, baseIncome: 10, multiplier: 1},
+        "steam-engine": { basePrice: 2500, income: 100, amount: 1, nextPrice: 100, baseIncome: 100, multiplier: 1},
+        "factory": { basePrice: 10000, income: 1000, amount: 1, nextPrice: 1000, baseIncome: 1000, multiplier: 1},
+        "factory-worker": { basePrice: 5000, income: 5000, amount: 1, nextPrice: 5000, baseIncome: 5000, multiplier: 1},
+        "child-worker": { basePrice: 5000, income: 7500, amount: 1, nextPrice: 7500, baseIncome: 7500, multiplier: 1},
+        "car-production": { basePrice: 10000, income: 10000, amount: 1, nextPrice: 10000, baseIncome: 10000, multiplier: 1},
+    }
 
 };
+
+
+
 //inventory
 //basePrices
 
 
 
 function handlePurchasing(itemName: string): void {
-    const currentAmount = gameState.inventory[itemName];
-    gameState.inventory[itemName] = currentAmount + 1;
+    const currentAmount = gameState.ITEMS[itemName].amount;
+    gameState.ITEMS[itemName].amount = currentAmount + 1;
 
     const productElement = document.querySelector(`[data-product="${itemName}"]`);
 
     if(productElement) {
         const ownedElement = productElement.querySelector('.product-owned');
         if (ownedElement) {
-            ownedElement.textContent = String(gameState.inventory[itemName]);
+            ownedElement.textContent = String(gameState.ITEMS[itemName].amount);
         }
         const nextPrice = getNextPrice(itemName);
         const costElement = productElement.querySelector('.product-cost span');
@@ -98,8 +66,8 @@ function handlePurchasing(itemName: string): void {
 }
 
 function getNextPrice(itemKey: string): number {
-    const base = ITEM_CONFIG[itemKey].price;
-    const amountOwned = gameState.inventory[itemKey];
+    const base = gameState.ITEMS[itemKey].basePrice;
+    const amountOwned = gameState.ITEMS[itemKey].amount;
 
     // 1.15 is your 15% increase
     const multiplier = Math.pow(1.15, amountOwned);
@@ -115,7 +83,7 @@ function unlockUpgrade(upgradeName: string): void {
 }
 
 function earnMoneyOnClick(): void{
-    gameState.money += gameState.inventory["hands"] * gameState.multipliers["hands"];
+    gameState.money += gameState.ITEMS["hands"].amount * gameState.ITEMS["hands"].multiplier;
     updateDisplay();
 }
 
