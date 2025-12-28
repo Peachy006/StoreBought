@@ -6,13 +6,17 @@
 //TODO remove money when buying
 
 interface GameState {
+    karma: number; // -1 for ethically wrong decision, +1 for good decision
     inventory: Record<string, number>;
     basePrices: Record<string, number>;
+    baseIncome: Record<string, number>;
 }
 
 
 let gameState: GameState = {
-    //Saves the amount players have bought.
+
+    karma: 0,
+    //Saves the amount of products players have bought.
     inventory: {
         "hands": 0,
         "loom": 0,
@@ -20,7 +24,8 @@ let gameState: GameState = {
         "steam-engine": 0,
         "factory": 0,
         "factory-worker": 0,
-        "religion": 0,
+        "child-worker": 0,
+        "car-production": 0,
     },
 
     basePrices: {
@@ -30,13 +35,25 @@ let gameState: GameState = {
         "coal-cart": 500,
         "steam-engine": 2500,
         "factory": 10000,
-        "factory-worker": 50000,
-        "religion": 250000
-    }
+        "factory-worker": 5000,
+        "child-worker": 5000,
+        "car-production": 10000
+    },
+
+    baseIncome: {
+        //Saves income from products
+        "hands": 1,
+        "loom": 5,
+        "coal-cart": 10,
+        "steam-engine": 100,
+        "factory": 1000,
+        "factory-worker": 5000,
+        "child-worker": 7500,
+        "car-production": 10000,
+    },
 };
 //inventory
 //basePrices
-
 
 
 
@@ -69,4 +86,11 @@ function getNextPrice(itemKey: string): number {
     const multiplier = Math.pow(1.15, amountOwned);
 
     return Math.floor(base * multiplier);
+}
+
+function unlockUpgrade(upgradeName: string): void {
+    let thingy = document.querySelector(`[data-upgrade="${upgradeName}"]`) as HTMLElement;
+    if(thingy) {
+        thingy.style.display = "flex";
+    }
 }
