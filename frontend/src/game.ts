@@ -1,7 +1,5 @@
 
 
-//TODO make money on click
-//TODO add economy
 //TODO check if you can afford upgrades
 //TODO remove money when buying
 //TODO make it so that when buying upgrades it doesnt copy the text
