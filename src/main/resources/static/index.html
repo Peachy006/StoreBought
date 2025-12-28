@@ -25,7 +25,7 @@
         <div class="store-header">Store</div>
         <div id="products">
             <div class="product locked" data-product="hands" onClick="handlePurchasing('hands')">
-                <div class="product-icon">👆</div>
+                <div class="product-icon">H</div>
                 <div class="product-info">
                     <div class="product-name">Hands</div>
                     <div class="product-cost"><span>15</span>(can put extra text)</div>
@@ -33,7 +33,7 @@
                 <div class="product-owned">0</div>
             </div>
             <div class="product locked" data-product="loom" onClick="handlePurchasing('loom')">
-                <div class="product-icon">👵</div>
+                <div class="product-icon">L</div>
                 <div class="product-info">
                     <div class="product-name">Loom</div>
                     <div class="product-cost"><span>100</span></div>
@@ -41,7 +41,7 @@
                 <div class="product-owned">0</div>
             </div>
             <div class="product locked" data-product="coal-cart" onClick="handlePurchasing('coal-cart')">
-                <div class="product-icon">👵</div>
+                <div class="product-icon">C</div>
                 <div class="product-info">
                     <div class="product-name">Coal Cart</div>
                     <div class="product-cost"><span>100</span></div>
@@ -49,7 +49,7 @@
                 <div class="product-owned">0</div>
             </div>
             <div class="product locked" data-product="steam-engine" onClick="handlePurchasing('steam-engine')">
-                <div class="product-icon">👵</div>
+                <div class="product-icon">S</div>
                 <div class="product-info">
                     <div class="product-name">Steam Engine</div>
                     <div class="product-cost"><span>100</span></div>
@@ -57,7 +57,7 @@
                 <div class="product-owned">0</div>
             </div>
             <div class="product locked" data-product="factory" onClick="handlePurchasing('factory')">
-                <div class="product-icon">👵</div>
+                <div class="product-icon">F</div>
                 <div class="product-info">
                     <div class="product-name">Factory</div>
                     <div class="product-cost"><span>100</span></div>
@@ -65,7 +65,7 @@
                 <div class="product-owned">0</div>
             </div>
             <div class="product locked" data-product="factory-worker" onClick="handlePurchasing('factory-worker')">
-                <div class="product-icon">👵</div>
+                <div class="product-icon">F</div>
                 <div class="product-info">
                     <div class="product-name">Factory Worker</div>
                     <div class="product-cost"><span>100</span></div>
@@ -73,7 +73,7 @@
                 <div class="product-owned">0</div>
             </div>
             <div style="display: none;" class="product locked" data-product="child-worker" onClick="handlePurchasing('child-worker')">
-                <div class="product-icon">sup</div>
+                <div class="product-icon">c</div>
                 <div class="product-info">
                     <div class="product-name">Child Worker</div>
                     <div class="product-cost"><span>100</span></div>
@@ -81,7 +81,7 @@
                 <div class="product-owned">0</div>
             </div>
             <div class="product locked" data-product="religion" onClick="handlePurchasing('religion')">
-                <div class="product-icon">👵</div>
+                <div class="product-icon">R</div>
                 <div class="product-info">
                     <div class="product-name">Religion</div>
                     <div class="product-cost"><span>100</span></div>
@@ -94,8 +94,23 @@
     <div id="notifications"></div>
 </div>
 
+<div id="choice-overlay" class="hidden">
+    <div class="choice-card">
+        <h2 id="choice-title">placeholder</h2>
+        <p id="choice-desc">C</p>
+
+        <div class="choice-buttons">
+            <button onclick="handleChoice('evil')" class="btn-steampunk">
+                <span>Unethical</span>
+            </button>
+            <button onclick="handleChoice('good')" class="btn-steampunk">
+                <span>Ethical</span>
+            </button>
+        </div>
+    </div>
+</div>
+
 <script>
-    // Create snowflakes (visual effect only)
     function createSnowflakes() {
         const leftColumn = document.getElementById('leftColumn');
         const snowflakeChars = ['❄', '❅', '❆'];
@@ -117,5 +132,6 @@
     createSnowflakes();
 </script>
 <script src="game.js"></script>
+<script src="eraOneEvents.js"></script>
 </body>
 </html>
