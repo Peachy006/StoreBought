@@ -9,7 +9,8 @@
 //TODO add hotkeys for buying stuff
 //TODO add the display for the income per second
 //Todo the income per second freezes when the popup for you cant afford is open (also freezes when its not the open tab)
-
+//todo an option to buy more upgrades per click
+//todo should we look into ascensions or do we go with the era theme, maybe ascenscions within the eras?
 
 interface GameState {
     // -1 for ethically wrong decision, +1 for good decision
