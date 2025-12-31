@@ -2,9 +2,8 @@ package com.github.peachy006.storeboughtbackendproper;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
+@SpringBootApplication // Removed the exclude here
 public class StoreBoughtBackendProperApplication {
 
     public static void main(String[] args) {
