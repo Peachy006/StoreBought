@@ -1,5 +1,3 @@
-
-
 interface GameState {
     // -1 for ethically wrong decision, +1 for good decision
     cookiesPerClick: number;
@@ -76,6 +74,7 @@ function handlePurchasing(itemName: string): void {
         }
     }
 
+    saveGame(); // Save on major event (purchase)
     checkForEvents();
 }
 
@@ -100,6 +99,25 @@ function earnMoneyOnClick(): void{
     gameState.money += (gameState.ITEMS["hands"].amount + 1) * gameState.ITEMS["hands"].multiplier;
     updateDisplay();
 }
+
+async function saveGame(): Promise<void> {
+    if (!currentUser.id) return;
+
+    currentUser.gameState = JSON.stringify(gameState);
+    try {
+        await fetch('/users/update', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(currentUser)
+        });
+        console.log("Game Saved Automatically");
+    } catch (e) {
+        console.error("Failed to save game", e);
+    }
+}
+
+// Auto-save every 30 seconds
+setInterval(saveGame, 30000);
 
 function updateDisplay() {
     let element = document.getElementById("money-display");
@@ -129,6 +147,3 @@ function calculateIncome(): void {
     gameState.money += income;
     updateDisplay();
 }
-
-
-

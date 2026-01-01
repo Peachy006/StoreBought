@@ -25,9 +25,18 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/add")
-    public String add(@RequestBody User user) {
-        userService.saveUser(user);
-        return "User added successfully";
+    public User add(@RequestBody User user) {
+        return userService.saveUser(user);
+    }
+
+    @PostMapping("/login")
+    public User login(@RequestBody User user) {
+        return userService.login(user.getUsername(), user.getPassword());
+    }
+
+    @PutMapping("/update")
+    public User update(@RequestBody User user) {
+        return userService.saveUser(user);
     }
 
     @GetMapping("/all")

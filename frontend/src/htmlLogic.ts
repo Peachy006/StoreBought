@@ -3,13 +3,13 @@
 interface User {
     username: string;
     password: string;
-    userId: string;
+    id?: number;
+    gameState?: string;
 }
 
 let currentUser: User = {
     username: '',
     password: '',
-    userId: ''
 };
 
 let isPasswordVisible: boolean = false;
@@ -62,7 +62,7 @@ function closePopup(): void {
     isPasswordVisible = false;
 }
 
-function handleLogin(): void {
+async function handleLogin(): Promise<void> {
     const usernameInput = document.getElementById('login-username') as HTMLInputElement;
     const passwordInput = document.getElementById('login-password') as HTMLInputElement;
     const errorDiv = document.getElementById('login-error');
@@ -72,28 +72,43 @@ function handleLogin(): void {
     const username = usernameInput.value;
     const password = passwordInput.value;
 
-    // Clear previous errors
     errorDiv.classList.add('hidden');
 
-    // Validation
     if (!username || !password) {
         showError('login-error', 'Please fill in all fields');
         return;
     }
 
-    // YOUR LOGIN LOGIC HERE
-    // Example: Check against stored credentials
-    console.log('Login attempt:', username, password);
+    try {
+        const response = await fetch('/users/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        });
 
-    // Example success:
-    currentUser.username = username;
-    currentUser.password = password;
-    currentUser.userId = 'USER_' + Math.random().toString(36).substr(2, 9).toUpperCase();
-
-    showSuccess('Login successful!');
+        const user = await response.json();
+        if (user) {
+            currentUser = user;
+            if (user.gameState) {
+                const loadedState = JSON.parse(user.gameState);
+                Object.assign(gameState, loadedState);
+                updateDisplay();
+                // Update UI for items
+                for (const key in gameState.ITEMS) {
+                    const el = document.querySelector(`[data-product="${key}"] .product-owned`);
+                    if (el) el.textContent = String(gameState.ITEMS[key].amount);
+                }
+            }
+            showSuccess('Login successful!');
+        } else {
+            showError('login-error', 'Invalid username or password');
+        }
+    } catch (e) {
+        showError('login-error', 'Server error. Try again later.');
+    }
 }
 
-function handleRegister(): void {
+async function handleRegister(): Promise<void> {
     const usernameInput = document.getElementById('register-username') as HTMLInputElement;
     const passwordInput = document.getElementById('register-password') as HTMLInputElement;
     const errorDiv = document.getElementById('register-error');
@@ -103,45 +118,25 @@ function handleRegister(): void {
     const username = usernameInput.value;
     const password = passwordInput.value;
 
-    // Clear previous errors
     errorDiv.classList.add('hidden');
 
-    // Validation
-    if (!username || !password) {
-        showError('register-error', 'Please fill in all fields');
+    if (!username || !password || username.length < 2 || password.length < 2) {
+        showError('register-error', 'Invalid input details');
         return;
     }
 
-    if (username.length < 3) {
-        showError('register-error', 'Username must be at least 3 characters');
-        return;
+    try {
+        const response = await fetch('/users/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password, gameState: JSON.stringify(gameState) })
+        });
+        const user = await response.json();
+        currentUser = user;
+        showSuccess('Account created successfully!');
+    } catch (e) {
+        showError('register-error', 'Could not create account');
     }
-
-    if (password.length < 6) {
-        showError('register-error', 'Password must be at least 6 characters');
-        return;
-    }
-
-    // YOUR REGISTRATION LOGIC HERE
-    // Example: Check if username exists
-    if (checkUsernameExists(username)) {
-        showError('register-error', 'Username already in use');
-        return;
-    }
-
-    // Success - create account
-    currentUser.username = username;
-    currentUser.password = password;
-    currentUser.userId = 'USER_' + Math.random().toString(36).substr(2, 9).toUpperCase();
-
-    console.log('Account created:', currentUser);
-    showSuccess('Account created successfully!');
-}
-
-function checkUsernameExists(username: string): boolean {
-    // YOUR LOGIC TO CHECK IF USERNAME EXISTS
-    // Example: return username === 'admin' || username === 'test';
-    return false; // Replace with actual check
 }
 
 function showError(elementId: string, message: string): void {
@@ -172,9 +167,8 @@ function updateAccountDisplay(): void {
     const passwordBtnText = document.getElementById('password-btn-text');
 
     if (displayUsername) displayUsername.textContent = currentUser.username || 'Not logged in';
-    if (displayUserId) displayUserId.textContent = currentUser.userId || '-';
+    if (displayUserId) displayUserId.textContent = currentUser.id ? String(currentUser.id) : '-';
 
-    // Reset password display
     isPasswordVisible = false;
     if (displayPassword) {
         displayPassword.textContent = '••••••••';
