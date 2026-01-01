@@ -73,10 +73,10 @@ function handlePurchasing(itemName: string): void {
             costElement.textContent = String(nextPrice);
         }
     }
-
     saveGame(); // Save on major event (purchase)
     checkForEvents();
 }
+
 
 function getNextPrice(itemKey: string): number {
     const base = gameState.ITEMS[itemKey].basePrice;
@@ -141,12 +141,30 @@ async function saveGame(): Promise<void> {
     }
 }
 
-// Auto-save every 30 seconds
-setInterval(saveGame, 30000);
+// Auto-save every 20 seconds
+setInterval(saveGame, 20000);
 
 function updateDisplay() {
     let element = document.getElementById("money-display");
     if(element) {
         element.textContent = Math.floor(gameState.money).toLocaleString();
+    }
+
+    //passive
+    const elementTwo = document.getElementById("cookies-per-second");
+    if(elementTwo) {
+        let incomePerSecond = 0;
+        for(const itemKey in gameState.ITEMS) {
+            if(itemKey === "hands") continue;
+            incomePerSecond += gameState.ITEMS[itemKey].income * gameState.ITEMS[itemKey].amount * gameState.ITEMS[itemKey].multiplier;
+        }
+        elementTwo.textContent = String(Math.floor(incomePerSecond));
+    }
+
+    //click
+    const clickElement = document.getElementById("click-amount");
+    if(clickElement) {
+        let clickAmount = (gameState.ITEMS["hands"].amount + 1) * gameState.ITEMS["hands"].multiplier;
+        clickElement.textContent = String(clickAmount);
     }
 }
