@@ -3,7 +3,7 @@ package com.github.peachy006.storeboughtbackendproper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication // Removed the exclude here
+@SpringBootApplication
 public class StoreBoughtBackendProperApplication {
 
     public static void main(String[] args) {

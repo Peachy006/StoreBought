@@ -1,17 +1,5 @@
 
 
-//TODO figure out what to do with next phase
-//todo make it so that when you cant afford an upgrade its grey or indicated so in the ui
-//todo add a better popup for when you cant afford something (its annyoing to close, it should be more subtle)
-//todo switch around the price and amount in html, it doesnt look intuitive   maybe?
-//todo move over the creation of html elements to typescript so we can switch eras easily
-//todo number formatting for numbers (M B T Qa Qi)
-//TODO add hotkeys for buying stuff
-//TODO add the display for the income per second
-//Todo the income per second freezes when the popup for you cant afford is open (also freezes when its not the open tab)
-//todo an option to buy more upgrades per click
-//todo should we look into ascensions or do we go with the era theme, maybe ascenscions within the eras?
-
 interface GameState {
     // -1 for ethically wrong decision, +1 for good decision
     cookiesPerClick: number;

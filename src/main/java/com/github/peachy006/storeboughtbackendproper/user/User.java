@@ -2,8 +2,19 @@ package com.github.peachy006.storeboughtbackendproper.user;
 
 import jakarta.persistence.*;
 
+/*
+This is the class that defines what a user will be, this will contain the username and password, later on i must add the gameState parsed to json
+currently we use the @entity annotation to tell JPA that this class is a table in the database
+we use @table to tell JPA what the table name is
+we use @id to tell JPA that this is the primary key
+we use @generatedvalue to tell JPA how to generate the primary key
+we use @column to tell JPA what column the primary key is in the table
+the getters and setters can be replaced later with lombok
+ */
+
+
 @Entity
-@Table(name = "users") // Renaming the table to avoid MySQL reserved keyword conflicts
+@Table(name = "users")
 public class User {
 
     @Id
