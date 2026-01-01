@@ -100,6 +100,31 @@ function earnMoneyOnClick(): void{
     updateDisplay();
 }
 
+function checkForEvents(): void {
+    if(gameState.ITEMS["factory"].amount >= 1 && !gameState.events["child-labour"]) {
+        childLabourEvent();
+        gameState.events["child-labour"] = true;
+    }
+}
+
+setInterval(() => {
+    calculateIncome();
+}, 100);
+
+function calculateIncome(): void {
+    let income = 0;
+    for(const itemKey in gameState.ITEMS) {
+        if(itemKey === "hands") continue;
+        income += gameState.ITEMS[itemKey].income * gameState.ITEMS[itemKey].amount * gameState.ITEMS[itemKey].multiplier;
+    }
+    income /= 10;
+    gameState.money += income;
+    updateDisplay();
+}
+
+
+
+
 async function saveGame(): Promise<void> {
     if (!currentUser.id) return;
 
@@ -124,26 +149,4 @@ function updateDisplay() {
     if(element) {
         element.textContent = Math.floor(gameState.money).toLocaleString();
     }
-}
-
-function checkForEvents(): void {
-    if(gameState.ITEMS["factory"].amount >= 1 && !gameState.events["child-labour"]) {
-        childLabourEvent();
-        gameState.events["child-labour"] = true;
-    }
-}
-
-setInterval(() => {
-    calculateIncome();
-}, 100);
-
-function calculateIncome(): void {
-    let income = 0;
-    for(const itemKey in gameState.ITEMS) {
-        if(itemKey === "hands") continue;
-        income += gameState.ITEMS[itemKey].income * gameState.ITEMS[itemKey].amount * gameState.ITEMS[itemKey].multiplier;
-    }
-    income /= 10;
-    gameState.money += income;
-    updateDisplay();
 }

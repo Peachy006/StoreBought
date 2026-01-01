@@ -1,5 +1,7 @@
 // Popup Modal Functions
 
+//this handles the login and register forms as well as some html menu handling for functionality
+
 interface User {
     username: string;
     password: string;
@@ -14,6 +16,7 @@ let currentUser: User = {
 
 let isPasswordVisible: boolean = false;
 
+//just for html popup
 function openPopup(type: string): void {
     const popup = document.getElementById('account-popup');
     const forms = document.querySelectorAll('.popup-content');
@@ -37,6 +40,7 @@ function openPopup(type: string): void {
     popup.classList.remove('hidden');
 }
 
+//just for html popup
 function closePopup(): void {
     const popup = document.getElementById('account-popup');
     if (!popup) return;
@@ -62,7 +66,10 @@ function closePopup(): void {
     isPasswordVisible = false;
 }
 
+//this is for login and register
 async function handleLogin(): Promise<void> {
+
+    //Grab the elements
     const usernameInput = document.getElementById('login-username') as HTMLInputElement;
     const passwordInput = document.getElementById('login-password') as HTMLInputElement;
     const errorDiv = document.getElementById('login-error');
@@ -72,13 +79,18 @@ async function handleLogin(): Promise<void> {
     const username = usernameInput.value;
     const password = passwordInput.value;
 
+
+    //hides earlier errors
     errorDiv.classList.add('hidden');
 
+
+    //throw potential error
     if (!username || !password) {
         showError('login-error', 'Please fill in all fields');
         return;
     }
 
+    //try to login
     try {
         const response = await fetch('/users/login', {
             method: 'POST',
@@ -86,9 +98,11 @@ async function handleLogin(): Promise<void> {
             body: JSON.stringify({ username, password })
         });
 
+        //if successful, grab the user
         const user = await response.json();
         if (user) {
             currentUser = user;
+            //if the user has a gamestate, load it into the gamestate
             if (user.gameState) {
                 const loadedState = JSON.parse(user.gameState);
                 Object.assign(gameState, loadedState);
@@ -108,6 +122,7 @@ async function handleLogin(): Promise<void> {
     }
 }
 
+//register a new user
 async function handleRegister(): Promise<void> {
     const usernameInput = document.getElementById('register-username') as HTMLInputElement;
     const passwordInput = document.getElementById('register-password') as HTMLInputElement;
@@ -139,6 +154,8 @@ async function handleRegister(): Promise<void> {
     }
 }
 
+
+//function for showing errors
 function showError(elementId: string, message: string): void {
     const errorDiv = document.getElementById(elementId);
     if (!errorDiv) return;
@@ -147,6 +164,7 @@ function showError(elementId: string, message: string): void {
     errorDiv.classList.remove('hidden');
 }
 
+//function for showing success messages
 function showSuccess(message: string): void {
     // Hide all forms
     const forms = document.querySelectorAll('.popup-content');
@@ -160,16 +178,23 @@ function showSuccess(message: string): void {
     if (successMessage) successMessage.classList.remove('hidden');
 }
 
+//function for updating the account display, this is for the account view page
 function updateAccountDisplay(): void {
+
+    //Grab the elements
     const displayUsername = document.getElementById('display-username');
     const displayUserId = document.getElementById('display-userid');
     const displayPassword = document.getElementById('display-password');
     const passwordBtnText = document.getElementById('password-btn-text');
 
+    //if the elements exist, update their text content
     if (displayUsername) displayUsername.textContent = currentUser.username || 'Not logged in';
     if (displayUserId) displayUserId.textContent = currentUser.id ? String(currentUser.id) : '-';
 
+    //set the password visibility to false
     isPasswordVisible = false;
+
+    //if the elements exist, update their text content
     if (displayPassword) {
         displayPassword.textContent = '••••••••';
         displayPassword.classList.add('password-hidden');
@@ -177,6 +202,7 @@ function updateAccountDisplay(): void {
     if (passwordBtnText) passwordBtnText.textContent = 'Show Password';
 }
 
+//function for toggling the password visibility, the button that says show password
 function togglePassword(): void {
     const passwordDisplay = document.getElementById('display-password');
     const btnText = document.getElementById('password-btn-text');
