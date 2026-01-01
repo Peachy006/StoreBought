@@ -6,6 +6,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<!-- Burger Menu Button -->
+<div class="burger-btn" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<!-- Menu Overlay -->
+<div class="menu-overlay" onclick="toggleMenu()"></div>
+
+<!-- Burger Menu -->
+<div class="burger-menu">
+    <div class="menu-header">Menu</div>
+    <div class="menu-items">
+        <div class="menu-item" onclick="handleMenuClick('login')">Login</div>
+        <div class="menu-item" onclick="handleMenuClick('register')">Register</div>
+        <div class="menu-item" onclick="handleMenuClick('account')">View Account</div>
+        <!-- Add more menu items here as needed -->
+    </div>
+</div>
     <div id="game">
         <div id="leftColumn" onclick="earnMoneyOnClick()">
             <div style="margin-top: 40px; text-align: center;">
@@ -110,6 +130,72 @@
         </div>
     </div>
 
+<!-- Account Popup Modal -->
+<div id="account-popup" class="popup-overlay hidden">
+    <div class="popup-modal">
+        <button class="popup-close" onclick="closePopup()">×</button>
+
+        <!-- Login Form -->
+        <div id="login-form" class="popup-content hidden">
+            <h2 class="popup-title">Login</h2>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="login-username" class="form-input" placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="login-password" class="form-input" placeholder="Enter password">
+            </div>
+            <div id="login-error" class="error-message hidden"></div>
+            <button class="popup-btn" onclick="handleLogin()">Login</button>
+        </div>
+
+        <!-- Register Form -->
+        <div id="register-form" class="popup-content hidden">
+            <h2 class="popup-title">Create Account</h2>
+            <div class="form-group">
+                <label>Username</label>
+                <input type="text" id="register-username" class="form-input" placeholder="Choose username">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="register-password" class="form-input" placeholder="Choose password">
+            </div>
+            <div id="register-error" class="error-message hidden"></div>
+            <button class="popup-btn" onclick="handleRegister()">Create Account</button>
+        </div>
+
+        <!-- View Account -->
+        <div id="account-view" class="popup-content hidden">
+            <h2 class="popup-title">Your Account</h2>
+            <div class="account-info">
+                <div class="info-row">
+                    <span class="info-label">Username:</span>
+                    <span id="display-username" class="info-value">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">User ID:</span>
+                    <span id="display-userid" class="info-value">-</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Password:</span>
+                    <span id="display-password" class="info-value password-hidden">••••••••</span>
+                </div>
+            </div>
+            <button class="popup-btn" onclick="togglePassword()">
+                <span id="password-btn-text">Show Password</span>
+            </button>
+        </div>
+
+        <!-- Success Message -->
+        <div id="success-message" class="popup-content hidden">
+            <h2 class="popup-title success">✓ Success!</h2>
+            <p class="success-text" id="success-text">Account created successfully!</p>
+            <button class="popup-btn" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+</div>
+
     <script>
         function createSnowflakes() {
             const leftColumn = document.getElementById('leftColumn');
@@ -130,9 +216,43 @@
 
         // Initialize visual effects
         createSnowflakes();
+
+        // Burger Menu Functions
+        function toggleMenu() {
+            const menu = document.querySelector('.burger-menu');
+            const overlay = document.querySelector('.menu-overlay');
+            const burgerBtn = document.querySelector('.burger-btn');
+
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            burgerBtn.classList.toggle('active');
+        }
+
+        function handleMenuClick(action) {
+            console.log('Menu action:', action);
+
+            switch(action) {
+                case 'login':
+                    openPopup('login');
+                    break;
+                case 'register':
+                    openPopup('register');
+                    break;
+                case 'account':
+                    openPopup('account');
+                    break;
+                default:
+                    console.log('Unknown action:', action);
+            }
+
+            // Close burger menu after clicking
+            toggleMenu();
+        }
+
     </script>
     <script src="game.js"></script>
     <script src="eraOneEvents.js"></script>
     <script src="eraOneConfig.js"></script>
+    <script src="htmlLogic.js"></script>
 </body>
 </html>

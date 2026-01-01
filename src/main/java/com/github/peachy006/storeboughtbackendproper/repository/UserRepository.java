@@ -4,6 +4,8 @@ import com.github.peachy006.storeboughtbackendproper.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /*
 this is the interface that tells spring to use JPA to interact with the database
 we use @repository to tell spring that this class is a repository
@@ -17,5 +19,5 @@ im too scared
 @SuppressWarnings("unused")
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
+    Optional<User> findByUsername(String username);
 }

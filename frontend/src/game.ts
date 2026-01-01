@@ -129,3 +129,6 @@ function calculateIncome(): void {
     gameState.money += income;
     updateDisplay();
 }
+
+
+
