@@ -58,8 +58,9 @@ function handlePurchasing(itemName: string): void {
     // Calculate the current price before purchasing
     const currentPrice = getNextPrice(itemName);
 
-    if(gameState.money < currentPrice) {
-        return alert("You can't afford that, poor lil b!");
+    if (gameState.money < currentPrice) {
+        showNotification("You can't afford that!");
+        return; // Stop the purchase logic
     }
 
     // Deduct the money
@@ -234,3 +235,21 @@ window.addEventListener('keydown', (event: KeyboardEvent) => {
         handlePurchasing(itemName);
     }
 });
+
+function showNotification(message:any) {
+    const container = document.getElementById('notification-container');
+    if(!container) return;
+
+    // Create the element
+    const toast = document.createElement('div');
+    toast.className = 'notification';
+    toast.innerText = message;
+
+    // Add to container
+    container.appendChild(toast);
+
+    // Remove from DOM after the animation finishes (3 seconds total)
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
