@@ -7,11 +7,13 @@ Game Features
 
     [ ] make it so that when you cant afford an upgrade its grey or indicated so in the ui
 
-    [ ] add a better popup for when you cant afford something (its annyoing to close, it should be more subtle)
-
     [ ] an option to buy more upgrades per click
 
     [ ] fix bug where child labour dissapears when site reloads.
+
+    [ ]add upgrades to the game
+
+    [ ]make it so upgrades have a custom message when hovering
 
     [ ] should we look into ascensions or do we go with the era theme, maybe ascenscions within the eras?
 
