@@ -147,7 +147,7 @@ setInterval(saveGame, 20000);
 function updateDisplay() {
     let element = document.getElementById("money-display");
     if(element) {
-        element.textContent = Math.floor(gameState.money).toLocaleString();
+        element.textContent = formatNumber(gameState.money);
     }
 
     //passive
@@ -158,15 +158,25 @@ function updateDisplay() {
             if(itemKey === "hands") continue;
             incomePerSecond += gameState.ITEMS[itemKey].income * gameState.ITEMS[itemKey].amount * gameState.ITEMS[itemKey].multiplier;
         }
-        elementTwo.textContent = String(Math.floor(incomePerSecond));
+        elementTwo.textContent = formatNumber(Math.floor(incomePerSecond));
     }
 
     //click
     const clickElement = document.getElementById("click-amount");
     if(clickElement) {
         let clickAmount = (gameState.ITEMS["hands"].amount + 1) * gameState.ITEMS["hands"].multiplier;
-        clickElement.textContent = String(clickAmount);
+        clickElement.textContent = formatNumber(clickAmount);
     }
-    //Helper function for appending the correct Suffix
 
+}
+
+//Helper function for appending the correct Suffix
+function formatNumber(num: number): string {
+    if (num >= 1000000000) {
+        return (num/1000000000).toFixed(1) + "B";
+    }
+    else if(num >= 1000000) {
+        return (num/1000000).toFixed(1) + "M";
+    }
+    return num.toLocaleString();
 }

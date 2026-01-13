@@ -13,8 +13,6 @@ Game Features
 
     [ ] move over the creation of html elements to typescript so we can switch eras easily
 
-    [ ] number formatting for numbers (M B T Qa Qi)
-
     [ ] add hotkeys for buying stuff
 
     [ ] add the display for the income per second
