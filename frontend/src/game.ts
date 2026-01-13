@@ -25,6 +25,7 @@ let gameState: GameState = {
     era: 1,
 
     events: {
+        "child-labour-triggered": false,
         "child-labour": false
     },
     
@@ -49,11 +50,16 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function handlePurchasing(itemName: string): void {
+    if (itemName === "child-worker" && !gameState.events["child-labour"]) {
+        console.log("Adgang nægtet: Du har ikke valgt børnearbejde.");
+        return;
+    }
+
     // Calculate the current price before purchasing
     const currentPrice = getNextPrice(itemName);
 
     if(gameState.money < currentPrice) {
-        return alert("You can't afford that!");
+        return alert("You can't afford that, poor lil b!");
     }
 
     // Deduct the money
@@ -107,9 +113,9 @@ function earnMoneyOnClick(): void{
 }
 
 function checkForEvents(): void {
-    if(gameState.ITEMS["factory"].amount >= 1 && !gameState.events["child-labour"]) {
+    if(gameState.ITEMS["factory"].amount >= 1 && !gameState.events["child-labour-triggered"]) {
         childLabourEvent();
-        gameState.events["child-labour"] = true;
+        gameState.events["child-labour-triggered"] = true;
     }
 }
 
@@ -208,13 +214,23 @@ window.addEventListener('keydown', (event: KeyboardEvent) => {
     if (isTyping) return;
 
     const keyNumber = parseInt(event.key)
-
     if(isNaN(keyNumber)) return;
+
+    if (keyNumber === 7 && !gameState.events["child-labour"]) {
+        console.log("Meow!");
+        return;
+    }
 
     const itemIndex = keyNumber - 1;
 
     if(itemIndex >= 0 && itemIndex < itemHotkeys.length) {
         const itemName = itemHotkeys[itemIndex];
+
+        if(itemName === "child-worker" && !gameState.events["child-labour"]) {
+            console.log("You have not unlocked child labour");
+            return;
+        }
+
         handlePurchasing(itemName);
     }
 });

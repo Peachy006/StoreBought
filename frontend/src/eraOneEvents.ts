@@ -46,10 +46,12 @@ function handleChoice(type: ChoiceType): void {
 
     if (type === 'evil') {
         unlockUpgrade("child-worker");
+        gameState.events["child-labour"] = true;
     } else {
-        //we dont know yet
+        console.log("Choose good karma - No child labour")
     }
 
     // Hide the menu after choice
     overlay.classList.add('hidden');
+    updateDisplay();
 }
