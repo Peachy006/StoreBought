@@ -4,6 +4,7 @@ interface GameState {
     money: number;
     karma: number;
     events: Record<string, boolean>;
+    era: number;
 
     
     ITEMS: Record<string, {
@@ -11,7 +12,8 @@ interface GameState {
         income: number,
         amount: number,
         baseIncome: number,
-        multiplier: number
+        multiplier: number,
+        era: number
     }>;
 }
 
@@ -20,6 +22,7 @@ let gameState: GameState = {
     cookiesPerClick: 1,
     money: 0,
     karma: 0,
+    era: 1,
 
     events: {
         "child-labour": false
@@ -27,20 +30,23 @@ let gameState: GameState = {
     
     ITEMS: {
         // income is pretty much useless for hands
-        "hands": { basePrice: 15, income: 1, amount: 0, baseIncome: 1, multiplier: 1},
-        "loom": { basePrice: 100, income: 5, amount: 0, baseIncome: 5, multiplier: 1},
-        "coal-cart": { basePrice: 500, income: 10, amount: 0, baseIncome: 10, multiplier: 1},
-        "steam-engine": { basePrice: 2500, income: 100, amount: 0, baseIncome: 100, multiplier: 1},
-        "factory": { basePrice: 10000, income: 1000, amount: 0, baseIncome: 1000, multiplier: 1},
-        "factory-worker": { basePrice: 50000, income: 5000, amount: 0, baseIncome: 5000, multiplier: 1},
-        "child-worker": { basePrice: 100000, income: 7500, amount: 0, baseIncome: 7500, multiplier: 1},
-        "car-production": { basePrice: 500000, income: 10000, amount: 0, baseIncome: 10000, multiplier: 1},
+        "hands": { basePrice: 15, income: 1, amount: 0, baseIncome: 1, multiplier: 1, era: 1},
+        "loom": { basePrice: 100, income: 5, amount: 0, baseIncome: 5, multiplier: 1, era: 1},
+        "coal-cart": { basePrice: 500, income: 10, amount: 0, baseIncome: 10, multiplier: 1, era: 1},
+        "steam-engine": { basePrice: 2500, income: 100, amount: 0, baseIncome: 100, multiplier: 1, era: 1},
+        "factory": { basePrice: 10000, income: 1000, amount: 0, baseIncome: 1000, multiplier: 1, era: 1},
+        "factory-worker": { basePrice: 50000, income: 5000, amount: 0, baseIncome: 5000, multiplier: 1, era: 1},
+        "child-worker": { basePrice: 100000, income: 7500, amount: 0, baseIncome: 7500, multiplier: 1, era: 1},
+        "car-production": { basePrice: 500000, income: 10000, amount: 0, baseIncome: 10000, multiplier: 1, era: 1},
     }
 
 };
 
 
-
+window.addEventListener('DOMContentLoaded', () => {
+    updateDisplay();
+    updateDisplayForEra();
+});
 
 function handlePurchasing(itemName: string): void {
     // Calculate the current price before purchasing
