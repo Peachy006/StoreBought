@@ -21,6 +21,8 @@ Game Features
 
     [ ] an option to buy more upgrades per click
 
+    [ ] fix bug where child labour dissapears when site reloads.
+
     [ ] should we look into ascensions or do we go with the era theme, maybe ascenscions within the eras?
 
 Backend

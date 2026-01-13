@@ -70,7 +70,7 @@ function handlePurchasing(itemName: string): void {
         const nextPrice = getNextPrice(itemName);
         const costElement = productElement.querySelector('.product-cost span');
         if (costElement) {
-            costElement.textContent = String(nextPrice);
+            costElement.textContent = formatNumber(nextPrice);
         }
     }
     saveGame(); // Save on major event (purchase)
@@ -147,7 +147,7 @@ setInterval(saveGame, 20000);
 function updateDisplay() {
     let element = document.getElementById("money-display");
     if(element) {
-        element.textContent = formatNumber(gameState.money);
+        element.textContent = formatNumber(Math.floor(gameState.money));
     }
 
     //passive
@@ -178,5 +178,37 @@ function formatNumber(num: number): string {
     else if(num >= 1000000) {
         return (num/1000000).toFixed(1) + "M";
     }
-    return num.toLocaleString();
+    return Math.floor(num).toLocaleString('da-DK');
 }
+
+// Inputs
+
+const itemHotkeys: string[] = [
+    "hands",
+    "loom",
+    "coal-cart",
+    "steam-engine",
+    "factory",
+    "factory-worker",
+    "child-worker"
+];
+
+window.addEventListener('keydown', (event: KeyboardEvent) => {
+    const activeElement = document.activeElement;
+    const isTyping = activeElement instanceof HTMLInputElement ||
+        activeElement instanceof HTMLTextAreaElement ||
+        (activeElement as HTMLElement)?.isContentEditable;
+
+    if (isTyping) return;
+
+    const keyNumber = parseInt(event.key)
+
+    if(isNaN(keyNumber)) return;
+
+    const itemIndex = keyNumber - 1;
+
+    if(itemIndex >= 0 && itemIndex < itemHotkeys.length) {
+        const itemName = itemHotkeys[itemIndex];
+        handlePurchasing(itemName);
+    }
+});
