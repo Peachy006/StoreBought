@@ -167,4 +167,6 @@ function updateDisplay() {
         let clickAmount = (gameState.ITEMS["hands"].amount + 1) * gameState.ITEMS["hands"].multiplier;
         clickElement.textContent = String(clickAmount);
     }
+    //Helper function for appending the correct Suffix
+
 }
