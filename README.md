@@ -9,16 +9,6 @@ Game Features
 
     [ ] add a better popup for when you cant afford something (its annyoing to close, it should be more subtle)
 
-    [ ] switch around the price and amount in html, it doesnt look intuitive maybe?
-
-    [ ] move over the creation of html elements to typescript so we can switch eras easily
-
-    [ ] add hotkeys for buying stuff
-
-    [ ] add the display for the income per second
-
-    [ ] the income per second freezes when the popup for you cant afford is open (also freezes when its not the open tab)
-
     [ ] an option to buy more upgrades per click
 
     [ ] fix bug where child labour dissapears when site reloads.
