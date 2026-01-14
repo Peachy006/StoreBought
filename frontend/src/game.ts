@@ -25,8 +25,8 @@ let gameState: GameState = {
     era: 1,
 
     events: {
-        "child-labour-triggered": false,
-        "child-labour": false
+        "child-worker-triggered": false,
+        "child-worker": false
     },
     
     ITEMS: {
@@ -50,7 +50,7 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 function handlePurchasing(itemName: string): void {
-    if (itemName === "child-worker" && !gameState.events["child-labour"]) {
+    if (itemName === "child-worker" && !gameState.events["child-worker"]) {
         console.log("Adgang nægtet: Du har ikke valgt børnearbejde.");
         return;
     }
@@ -115,9 +115,9 @@ function earnMoneyOnClick(): void{
 
 // this is for adding the hotkey for child labour only if its activated
 function checkForEvents(): void {
-    if(gameState.ITEMS["factory"].amount >= 1 && !gameState.events["child-labour-triggered"]) {
+    if(gameState.ITEMS["factory"].amount >= 1 && !gameState.events["child-worker-triggered"]) {
         childLabourEvent();
-        gameState.events["child-labour-triggered"] = true;
+        gameState.events["child-worker-triggered"] = true;
     }
 }
 
@@ -135,7 +135,6 @@ function calculateIncome(): void {
     gameState.money += income;
     updateDisplay();
 }
-
 
 
 
@@ -228,7 +227,7 @@ window.addEventListener('keydown', (event: KeyboardEvent) => {
     const keyNumber = parseInt(event.key)
     if(isNaN(keyNumber)) return;
 
-    if (keyNumber === 7 && !gameState.events["child-labour"]) {
+    if (keyNumber === 7 && !gameState.events["child-worker"]) {
         console.log("Meow!");
         return;
     }
@@ -238,7 +237,7 @@ window.addEventListener('keydown', (event: KeyboardEvent) => {
     if(itemIndex >= 0 && itemIndex < itemHotkeys.length) {
         const itemName = itemHotkeys[itemIndex];
 
-        if(itemName === "child-worker" && !gameState.events["child-labour"]) {
+        if(itemName === "child-worker" && !gameState.events["child-worker"]) {
             console.log("You have not unlocked child labour");
             return;
         }
