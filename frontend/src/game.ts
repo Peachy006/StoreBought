@@ -47,9 +47,6 @@ let gameState: GameState = {
 window.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
     updateDisplayForEra();
-    if (gameState.events["child-labour"]) {
-        unlockUpgrade("child-worker");
-    }
 });
 
 function handlePurchasing(itemName: string): void {
@@ -116,6 +113,7 @@ function earnMoneyOnClick(): void{
     updateDisplay();
 }
 
+// this is for adding the hotkey for child labour only if its activated
 function checkForEvents(): void {
     if(gameState.ITEMS["factory"].amount >= 1 && !gameState.events["child-labour-triggered"]) {
         childLabourEvent();
@@ -184,6 +182,16 @@ function updateDisplay() {
         clickElement.textContent = formatNumber(clickAmount);
     }
 
+    updateEventsAndUnlockUpgrades();
+
+}
+
+function updateEventsAndUnlockUpgrades(): void {
+    for(const itemKey in gameState.events) {
+        if(gameState.events[itemKey]) {
+            unlockUpgrade(itemKey);
+        }
+    }
 }
 
 //Helper function for appending the correct Suffix

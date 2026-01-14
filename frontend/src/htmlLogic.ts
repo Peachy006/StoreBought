@@ -114,6 +114,7 @@ async function handleLogin(): Promise<void> {
                 }
             }
             showSuccess('Login successful!');
+            updateDisplay();
         } else {
             showError('login-error', 'Invalid username or password');
         }
