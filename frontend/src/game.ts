@@ -47,11 +47,11 @@ let gameState: GameState = {
 window.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
     updateDisplayForEra();
+    updateDisplayForUpgrades();
 });
 
 function handlePurchasing(itemName: string): void {
     if (itemName === "child-worker" && !gameState.events["child-worker"]) {
-        console.log("Adgang nægtet: Du har ikke valgt børnearbejde.");
         return;
     }
 
@@ -189,6 +189,26 @@ function updateEventsAndUnlockUpgrades(): void {
     for(const itemKey in gameState.events) {
         if(gameState.events[itemKey]) {
             unlockUpgrade(itemKey);
+        }
+    }
+}
+
+function updateDisplayForUpgrades(): void {
+    for (const itemKey in gameState.ITEMS) {
+        const productElement = document.querySelector(`[data-product="${itemKey}"]`);
+        if (productElement) {
+            // Update the "Owned" count
+            const ownedElement = productElement.querySelector('.product-owned');
+            if (ownedElement) {
+                ownedElement.textContent = String(gameState.ITEMS[itemKey].amount);
+            }
+
+            // Calculate and update the next price
+            const nextPrice = getNextPrice(itemKey);
+            const costElement = productElement.querySelector('.product-cost span');
+            if (costElement) {
+                costElement.textContent = formatNumber(nextPrice);
+            }
         }
     }
 }

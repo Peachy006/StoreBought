@@ -13,6 +13,8 @@ Game Features
 
     [ ]add upgrades to the game
 
+    [ ] child labour not loading first time its logging in
+
     [ ]make it so upgrades have a custom message when hovering
 
     [ ] should we look into ascensions or do we go with the era theme, maybe ascenscions within the eras?
