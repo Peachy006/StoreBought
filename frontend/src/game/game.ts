@@ -51,7 +51,8 @@ const itemHotkeys: string[] = [
     "steam-engine",
     "factory",
     "factory-worker",
-    "child-worker"
+    "child-worker",
+    "car-production"
 ];
 
 

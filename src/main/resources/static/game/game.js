@@ -27,7 +27,8 @@ const itemHotkeys = [
     "steam-engine",
     "factory",
     "factory-worker",
-    "child-worker"
+    "child-worker",
+    "car-production"
 ];
 function handlePurchasing(itemNumber) {
     let itemName = null;
