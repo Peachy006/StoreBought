@@ -182,6 +182,7 @@ function updateDisplay() {
     }
 
     updateEventsAndUnlockUpgrades();
+    updateDisplayForUpgrades();
 
 }
 
