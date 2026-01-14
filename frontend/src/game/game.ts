@@ -12,6 +12,7 @@ interface GameState {
         income: number,
         amount: number,
         baseIncome: number,
+        numberInEra: number,
         multiplier: number,
         era: number
     }>;
@@ -31,29 +32,40 @@ let gameState: GameState = {
     
     ITEMS: {
         // income is pretty much useless for hands
-        "hands": { basePrice: 15, income: 1, amount: 0, baseIncome: 1, multiplier: 1, era: 1},
-        "loom": { basePrice: 100, income: 5, amount: 0, baseIncome: 5, multiplier: 1, era: 1},
-        "coal-cart": { basePrice: 500, income: 10, amount: 0, baseIncome: 10, multiplier: 1, era: 1},
-        "steam-engine": { basePrice: 2500, income: 100, amount: 0, baseIncome: 100, multiplier: 1, era: 1},
-        "factory": { basePrice: 10000, income: 1000, amount: 0, baseIncome: 1000, multiplier: 1, era: 1},
-        "factory-worker": { basePrice: 50000, income: 5000, amount: 0, baseIncome: 5000, multiplier: 1, era: 1},
-        "child-worker": { basePrice: 100000, income: 7500, amount: 0, baseIncome: 7500, multiplier: 1, era: 1},
-        "car-production": { basePrice: 500000, income: 10000, amount: 0, baseIncome: 10000, multiplier: 1, era: 1},
+        "hands": { basePrice: 15, income: 1, amount: 0, baseIncome: 1, multiplier: 1, era: 1, numberInEra: 1},
+        "loom": { basePrice: 100, income: 5, amount: 0, baseIncome: 5, multiplier: 1, era: 1, numberInEra: 2},
+        "coal-cart": { basePrice: 500, income: 10, amount: 0, baseIncome: 10, multiplier: 1, era: 1, numberInEra: 3},
+        "steam-engine": { basePrice: 2500, income: 100, amount: 0, baseIncome: 100, multiplier: 1, era: 1, numberInEra: 4},
+        "factory": { basePrice: 10000, income: 1000, amount: 0, baseIncome: 1000, multiplier: 1, era: 1, numberInEra: 5},
+        "factory-worker": { basePrice: 50000, income: 5000, amount: 0, baseIncome: 5000, multiplier: 1, era: 1, numberInEra: 6},
+        "child-worker": { basePrice: 100000, income: 7500, amount: 0, baseIncome: 7500, multiplier: 1, era: 1, numberInEra: 7},
+        "car-production": { basePrice: 500000, income: 10000, amount: 0, baseIncome: 10000, multiplier: 1, era: 1, numberInEra: 8},
     }
 
 };
 
+const itemHotkeys: string[] = [
+    "hands",
+    "loom",
+    "coal-cart",
+    "steam-engine",
+    "factory",
+    "factory-worker",
+    "child-worker"
+];
 
-window.addEventListener('DOMContentLoaded', () => {
-    updateDisplay();
-    updateDisplayForEra();
-    updateDisplayForUpgrades();
-});
 
-function handlePurchasing(itemName: string): void {
+function handlePurchasing(itemNumber: number): void {
+    let itemName = null;
+    switch(gameState.era) {
+        case 1:
+            itemName = getItemKey(1, itemNumber)
+    }
     if (itemName === "child-worker" && !gameState.events["child-worker"]) {
         return;
     }
+
+    if(!itemName) return;
 
     // Calculate the current price before purchasing
     const currentPrice = getNextPrice(itemName);
@@ -157,86 +169,31 @@ async function saveGame(): Promise<void> {
 // Auto-save every 20 seconds
 setInterval(saveGame, 20000);
 
-function updateDisplay() {
-    let element = document.getElementById("money-display");
-    if(element) {
-        element.textContent = formatNumber(Math.floor(gameState.money));
-    }
 
-    //passive
-    const elementTwo = document.getElementById("cookies-per-second");
-    if(elementTwo) {
-        let incomePerSecond = 0;
-        for(const itemKey in gameState.ITEMS) {
-            if(itemKey === "hands") continue;
-            incomePerSecond += gameState.ITEMS[itemKey].income * gameState.ITEMS[itemKey].amount * gameState.ITEMS[itemKey].multiplier;
-        }
-        elementTwo.textContent = formatNumber(Math.floor(incomePerSecond));
-    }
-
-    //click
-    const clickElement = document.getElementById("click-amount");
-    if(clickElement) {
-        let clickAmount = (gameState.ITEMS["hands"].amount + 1) * gameState.ITEMS["hands"].multiplier;
-        clickElement.textContent = formatNumber(clickAmount);
-    }
-
-    updateEventsAndUnlockUpgrades();
-    updateDisplayForUpgrades();
-
-}
-
-function updateEventsAndUnlockUpgrades(): void {
-    for(const itemKey in gameState.events) {
-        if(gameState.events[itemKey]) {
-            unlockUpgrade(itemKey);
-        }
-    }
-}
-
-function updateDisplayForUpgrades(): void {
-    for (const itemKey in gameState.ITEMS) {
-        const productElement = document.querySelector(`[data-product="${itemKey}"]`);
-        if (productElement) {
-            // Update the "Owned" count
-            const ownedElement = productElement.querySelector('.product-owned');
-            if (ownedElement) {
-                ownedElement.textContent = String(gameState.ITEMS[itemKey].amount);
-            }
-
-            // Calculate and update the next price
-            const nextPrice = getNextPrice(itemKey);
-            const costElement = productElement.querySelector('.product-cost span');
-            if (costElement) {
-                costElement.textContent = formatNumber(nextPrice);
-            }
-        }
-    }
-}
-
-//Helper function for appending the correct Suffix
+//Helper function for appending the correct suffix
+//** means exponent
 function formatNumber(num: number): string {
-    if (num >= 1000000000) {
-        return (num/1000000000).toFixed(1) + "B";
+    if (num >= 10**18) {
+        return (num/10**18).toFixed(1) + "Qi";
     }
-    else if(num >= 1000000) {
-        return (num/1000000).toFixed(1) + "M";
+    else if (num >= 10**15) {
+        return (num/10**15).toFixed(1) + "Qa";
+    }
+    else if (num >= 10**12) {
+        return (num/10**12).toFixed(1) + "T";
+    }
+    else if (num >= 10**9) {
+        return (num/10**9).toFixed(1) + "B";
+    }
+    else if(num >= 10**6) {
+        return (num/10**6).toFixed(1) + "M";
     }
     return Math.floor(num).toLocaleString('da-DK');
 }
 
 // Inputs
 
-const itemHotkeys: string[] = [
-    "hands",
-    "loom",
-    "coal-cart",
-    "steam-engine",
-    "factory",
-    "factory-worker",
-    "child-worker"
-];
-
+//keydown listener for purchasing with hotkeys
 window.addEventListener('keydown', (event: KeyboardEvent) => {
     const activeElement = document.activeElement;
     const isTyping = activeElement instanceof HTMLInputElement ||
@@ -249,7 +206,6 @@ window.addEventListener('keydown', (event: KeyboardEvent) => {
     if(isNaN(keyNumber)) return;
 
     if (keyNumber === 7 && !gameState.events["child-worker"]) {
-        console.log("Meow!");
         return;
     }
 
@@ -263,7 +219,7 @@ window.addEventListener('keydown', (event: KeyboardEvent) => {
             return;
         }
 
-        handlePurchasing(itemName);
+        handlePurchasing(gameState.ITEMS[itemName].numberInEra);
     }
 });
 
@@ -283,4 +239,18 @@ function showNotification(message:any) {
     setTimeout(() => {
         toast.remove();
     }, 3000);
+}
+
+
+window.addEventListener('DOMContentLoaded', () => {
+    updateDisplay();
+    updateDisplayForEra();
+    updateDisplayForUpgrades();
+});
+
+function getItemKey(era: number, numberInEra: number): string | undefined {
+    const entry = Object.entries(gameState.ITEMS).find(
+        ([key, item]) => item.era === era && item.numberInEra === numberInEra
+    );
+    return entry?.[0];
 }

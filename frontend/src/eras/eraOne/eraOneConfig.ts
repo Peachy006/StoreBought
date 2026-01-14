@@ -11,7 +11,7 @@ function pushEraOneConfig(): void {
             const productDiv = document.createElement("div");
             productDiv.className = "product locked";
             productDiv.setAttribute("data-product", key);
-            productDiv.onclick = () => handlePurchasing(key);
+            productDiv.onclick = () => handlePurchasing(item.numberInEra);
 
             if (key === "child-worker" && !gameState.events["child-labour"]) {
                 productDiv.style.display = "none";
