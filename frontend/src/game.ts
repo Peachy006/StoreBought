@@ -47,6 +47,9 @@ let gameState: GameState = {
 window.addEventListener('DOMContentLoaded', () => {
     updateDisplay();
     updateDisplayForEra();
+    if (gameState.events["child-labour"]) {
+        unlockUpgrade("child-worker");
+    }
 });
 
 function handlePurchasing(itemName: string): void {
