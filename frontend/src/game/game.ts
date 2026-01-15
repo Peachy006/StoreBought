@@ -14,7 +14,8 @@ interface GameState {
         baseIncome: number,
         numberInEra: number,
         multiplier: number,
-        era: number
+        era: number,
+        lockedByDefault: boolean
     }>;
 }
 
@@ -32,18 +33,19 @@ let gameState: GameState = {
 
     ITEMS: {
         // income is pretty much useless for hands
-        "hands": { basePrice: 15, income: 1, amount: 0, baseIncome: 1, multiplier: 1, era: 1, numberInEra: 1},
-        "loom": { basePrice: 150, income: 4, amount: 0, baseIncome: 4, multiplier: 1, era: 1, numberInEra: 2},
-        "coal-cart": { basePrice: 800, income: 15, amount: 0, baseIncome: 15, multiplier: 1, era: 1, numberInEra: 3},
-        "steam-engine": { basePrice: 4500, income: 60, amount: 0, baseIncome: 60, multiplier: 1, era: 1, numberInEra: 4},
-        "factory": { basePrice: 25000, income: 250, amount: 0, baseIncome: 250, multiplier: 1, era: 1, numberInEra: 5},
-        "factory-worker": { basePrice: 125000, income: 1000, amount: 0, baseIncome: 1000, multiplier: 1, era: 1, numberInEra: 6},
-        "child-worker": { basePrice: 400000, income: 2500, amount: 0, baseIncome: 2500, multiplier: 1, era: 1, numberInEra: 7},
-        "car-production": { basePrice: 1500000, income: 8000, amount: 0, baseIncome: 8000, multiplier: 1, era: 1, numberInEra: 8},
+        "hands": { basePrice: 15, income: 1, amount: 0, baseIncome: 1, multiplier: 1, era: 1, numberInEra: 1, lockedByDefault: false},
+        "loom": { basePrice: 150, income: 4, amount: 0, baseIncome: 4, multiplier: 1, era: 1, numberInEra: 2, lockedByDefault: false},
+        "coal-cart": { basePrice: 800, income: 15, amount: 0, baseIncome: 15, multiplier: 1, era: 1, numberInEra: 3, lockedByDefault: false},
+        "steam-engine": { basePrice: 4500, income: 60, amount: 0, baseIncome: 60, multiplier: 1, era: 1, numberInEra: 4, lockedByDefault: false},
+        "factory": { basePrice: 25000, income: 250, amount: 0, baseIncome: 250, multiplier: 1, era: 1, numberInEra: 5, lockedByDefault: false},
+        "factory-worker": { basePrice: 125000, income: 1000, amount: 0, baseIncome: 1000, multiplier: 1, era: 1, numberInEra: 6, lockedByDefault: false},
+        "child-worker": { basePrice: 400000, income: 2500, amount: 0, baseIncome: 2500, multiplier: 1, era: 1, numberInEra: 7, lockedByDefault: true},
+        "car-production": { basePrice: 1500000, income: 8000, amount: 0, baseIncome: 8000, multiplier: 1, era: 1, numberInEra: 8, lockedByDefault: false},
     }
 
 };
 
+//this needs to be changed to numberSystem instead
 const itemHotkeys: string[] = [
     "hands",
     "loom",
