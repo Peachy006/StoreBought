@@ -60,7 +60,12 @@ function handlePurchasing(itemNumber: number): void {
     let itemName = null;
     switch(gameState.era) {
         case 1:
-            itemName = getItemKey(1, itemNumber)
+            itemName = getItemKey(1, itemNumber);
+            break;
+        case 2:
+            itemName = getItemKey(2, itemNumber);
+            break;
+        default: return;
     }
     if (itemName === "child-worker" && !gameState.events["child-worker"]) {
         return;
