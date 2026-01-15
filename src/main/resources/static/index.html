@@ -26,46 +26,101 @@
         <!-- Add more menu items here as needed -->
     </div>
 </div>
-    <div id="game">
-        <div id="leftColumn" onclick="earnMoneyOnClick()">
-            <div style="margin-top: 40px; text-align: center;">
-                <div style="font-size: 48px; font-weight: bold; margin-bottom: 15px; text-align: center;">
-                    <span id="money-display">0</span> coins
-                </div>
-                <div style="font-size: 20px; margin-bottom: 20px; text-align: center;">
-                    <span id="cookies-per-second">0</span> per second
-                </div>
-                <div style="font-size: 16px; text-align: center;">
-                    <span id="click-amount">1</span> per click
-                </div>
+<div id="game">
+    <div id="leftColumn" onclick="earnMoneyOnClick()">
+        <div style="margin-top: 40px; text-align: center;">
+            <div style="font-size: 48px; font-weight: bold; margin-bottom: 15px; text-align: center;">
+                <span id="money-display">0</span> coins
             </div>
-        </div>
-
-        <div id="rightColumn">
-            <div class="store-header">Store</div>
-            <div id="products">
-
+            <div style="font-size: 20px; margin-bottom: 20px; text-align: center;">
+                <span id="cookies-per-second">0</span> per second
             </div>
-        </div>
-
-        <div id="notifications"></div>
-    </div>
-
-    <div id="choice-overlay" class="hidden">
-        <div class="choice-card">
-            <h2 id="choice-title">placeholder</h2>
-            <p id="choice-desc">C</p>
-
-            <div class="choice-buttons">
-                <button onclick="handleChoice('evil')" class="btn-steampunk">
-                    <span>Unethical</span>
-                </button>
-                <button onclick="handleChoice('good')" class="btn-steampunk">
-                    <span>Ethical</span>
-                </button>
+            <div style="font-size: 16px; text-align: center;">
+                <span id="click-amount">1</span> per click
             </div>
         </div>
     </div>
+
+    <div id="rightColumn">
+        <div class="store-header">Store</div>
+        <div id="products">
+
+        </div>
+        <!-- Multipliers Section - Add this after your #products div in rightColumn -->
+
+        <div class="section-header">Multipliers</div>
+        <div class="multipliers-container">
+            <div class="multipliers-grid" id="multipliers-grid">
+                <!-- Example multiplier tiles - you can populate these dynamically with JavaScript -->
+                <div class="multiplier-tile" onclick="purchaseMultiplier('double')">
+                    <div class="multiplier-icon">✖️</div>
+                    <div class="multiplier-name">Double</div>
+                    <div class="multiplier-cost">2K</div>
+                </div>
+
+                <div class="multiplier-tile">
+                    <div class="multiplier-icon">💫</div>
+                    <div class="multiplier-name">x5 Boost</div>
+                    <div class="multiplier-cost">15K</div>
+                </div>
+
+                <div class="multiplier-tile">
+                    <div class="multiplier-icon">⭐</div>
+                    <div class="multiplier-name">x10 Boost</div>
+                    <div class="multiplier-cost">75K</div>
+                </div>
+
+                <div class="multiplier-tile">
+                    <div class="multiplier-icon">🌟</div>
+                    <div class="multiplier-name">x25 Boost</div>
+                    <div class="multiplier-cost">500K</div>
+                </div>
+
+                <div class="multiplier-tile">
+                    <div class="multiplier-icon">💎</div>
+                    <div class="multiplier-name">Golden</div>
+                    <div class="multiplier-cost">1M</div>
+                </div>
+
+                <div class="multiplier-tile">
+                    <div class="multiplier-icon">🔥</div>
+                    <div class="multiplier-name">Inferno</div>
+                    <div class="multiplier-cost">5M</div>
+                </div>
+
+                <div class="multiplier-tile">
+                    <div class="multiplier-icon">👑</div>
+                    <div class="multiplier-name">Royal</div>
+                    <div class="multiplier-cost">25M</div>
+                </div>
+
+                <div class="multiplier-tile">
+                    <div class="multiplier-icon">🌌</div>
+                    <div class="multiplier-name">Cosmic</div>
+                    <div class="multiplier-cost">100M</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notifications"></div>
+</div>
+
+<div id="choice-overlay" class="hidden">
+    <div class="choice-card">
+        <h2 id="choice-title">placeholder</h2>
+        <p id="choice-desc">C</p>
+
+        <div class="choice-buttons">
+            <button onclick="handleChoice('evil')" class="btn-steampunk">
+                <span>Unethical</span>
+            </button>
+            <button onclick="handleChoice('good')" class="btn-steampunk">
+                <span>Ethical</span>
+            </button>
+        </div>
+    </div>
+</div>
 
 <!-- Account Popup Modal -->
 <div id="account-popup" class="popup-overlay hidden">
@@ -134,70 +189,71 @@
 </div>
 <div id="notification-container"></div>
 
-    <script>
-        function createSnowflakes() {
-            const leftColumn = document.getElementById('leftColumn');
-            const snowflakeChars = ['❄', '❅', '❆'];
+<script>
+    function createSnowflakes() {
+        const leftColumn = document.getElementById('leftColumn');
+        const snowflakeChars = ['❄', '❅', '❆'];
 
-            for (let i = 0; i < 50; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                snowflake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
-                snowflake.style.left = Math.random() * 100 + '%';
-                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                snowflake.style.animationDelay = Math.random() * 5 + 's';
-                snowflake.style.opacity = Math.random() * 0.6 + 0.4;
-                snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
-                leftColumn.appendChild(snowflake);
-            }
+        for (let i = 0; i < 50; i++) {
+            const snowflake = document.createElement('div');
+            snowflake.className = 'snowflake';
+            snowflake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+            snowflake.style.left = Math.random() * 100 + '%';
+            snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            snowflake.style.animationDelay = Math.random() * 5 + 's';
+            snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+            snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+            leftColumn.appendChild(snowflake);
+        }
+    }
+
+    // Initialize visual effects
+    createSnowflakes();
+
+    // Burger Menu Functions
+    function toggleMenu() {
+        const menu = document.querySelector('.burger-menu');
+        const overlay = document.querySelector('.menu-overlay');
+        const burgerBtn = document.querySelector('.burger-btn');
+
+        menu.classList.toggle('active');
+        overlay.classList.toggle('active');
+        burgerBtn.classList.toggle('active');
+    }
+
+    function handleMenuClick(action) {
+        console.log('Menu action:', action);
+
+        switch(action) {
+            case 'login':
+                openPopup('login');
+                break;
+            case 'register':
+                openPopup('register');
+                break;
+            case 'account':
+                openPopup('account');
+                break;
+            default:
+                console.log('Unknown action:', action);
         }
 
-        // Initialize visual effects
-        createSnowflakes();
-
-        // Burger Menu Functions
-        function toggleMenu() {
-            const menu = document.querySelector('.burger-menu');
-            const overlay = document.querySelector('.menu-overlay');
-            const burgerBtn = document.querySelector('.burger-btn');
-
-            menu.classList.toggle('active');
-            overlay.classList.toggle('active');
-            burgerBtn.classList.toggle('active');
-        }
-
-        function handleMenuClick(action) {
-            console.log('Menu action:', action);
-
-            switch(action) {
-                case 'login':
-                    openPopup('login');
-                    break;
-                case 'register':
-                    openPopup('register');
-                    break;
-                case 'account':
-                    openPopup('account');
-                    break;
-                default:
-                    console.log('Unknown action:', action);
-            }
-
-            // Close burger menu after clicking
-            toggleMenu();
-        }
+        // Close burger menu after clicking
+        toggleMenu();
+    }
 
 
 
 
-    </script>
-    <script src="eras/eraOne/eraOneConfig.js"></script>
-    <script src="eras/eraOne/eraOneEvents.js"></script>
-    <script src="game/displayHandler.js"></script>
-    <script src="game/elementHandling.js"></script>
-    <script src="game/game.js"></script>
-    <script src="game/htmlLogic.js"></script>
-    <script src="game/purchasingController.js"></script>
-    <script src="game/helperFunctionsController.js"></script>
+
+</script>
+    <script src="js/eras/eraOne/eraOneConfig.js"></script>
+    <script src="js/eras/eraOne/eraOneEvents.js"></script>
+    <script src="js/game/displayHandler.js"></script>
+    <script src="js/game/elementHandling.js"></script>
+    <script src="js/game/game.js"></script>
+    <script src="js/game/htmlLogic.js"></script>
+    <script src="js/game/purchasingController.js"></script>
+    <script src="js/game/helperFunctionsController.js"></script>
 </body>
 </html>

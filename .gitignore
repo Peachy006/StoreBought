@@ -33,13 +33,15 @@ build/
 .vscode/
 
 
+
+
 ### Frontend/Node ###
 frontend/node_modules/
 frontend/package-lock.json
 
+
 ### Compiled TypeScript ###
-src/main/resources/static/*.js
-src/main/resources/static/*.js.map
+src/main/resources/static/js/
 
 ### OS files ###
 .DS_Store
