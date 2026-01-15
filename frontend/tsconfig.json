@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2020",
-    "outDir": "../src/main/resources/static",
+    "outDir": "../src/main/resources/static/js",
     "strict": true
   },
   "include": ["src/**/*"]
