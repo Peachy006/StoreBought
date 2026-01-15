@@ -11,13 +11,13 @@ let gameState = {
     ITEMS: {
         // income is pretty much useless for hands
         "hands": { basePrice: 15, income: 1, amount: 0, baseIncome: 1, multiplier: 1, era: 1, numberInEra: 1 },
-        "loom": { basePrice: 100, income: 5, amount: 0, baseIncome: 5, multiplier: 1, era: 1, numberInEra: 2 },
-        "coal-cart": { basePrice: 500, income: 10, amount: 0, baseIncome: 10, multiplier: 1, era: 1, numberInEra: 3 },
-        "steam-engine": { basePrice: 2500, income: 100, amount: 0, baseIncome: 100, multiplier: 1, era: 1, numberInEra: 4 },
-        "factory": { basePrice: 10000, income: 1000, amount: 0, baseIncome: 1000, multiplier: 1, era: 1, numberInEra: 5 },
-        "factory-worker": { basePrice: 50000, income: 5000, amount: 0, baseIncome: 5000, multiplier: 1, era: 1, numberInEra: 6 },
-        "child-worker": { basePrice: 100000, income: 7500, amount: 0, baseIncome: 7500, multiplier: 1, era: 1, numberInEra: 7 },
-        "car-production": { basePrice: 500000, income: 10000, amount: 0, baseIncome: 10000, multiplier: 1, era: 1, numberInEra: 8 },
+        "loom": { basePrice: 150, income: 4, amount: 0, baseIncome: 4, multiplier: 1, era: 1, numberInEra: 2 },
+        "coal-cart": { basePrice: 800, income: 15, amount: 0, baseIncome: 15, multiplier: 1, era: 1, numberInEra: 3 },
+        "steam-engine": { basePrice: 4500, income: 60, amount: 0, baseIncome: 60, multiplier: 1, era: 1, numberInEra: 4 },
+        "factory": { basePrice: 25000, income: 250, amount: 0, baseIncome: 250, multiplier: 1, era: 1, numberInEra: 5 },
+        "factory-worker": { basePrice: 125000, income: 1000, amount: 0, baseIncome: 1000, multiplier: 1, era: 1, numberInEra: 6 },
+        "child-worker": { basePrice: 400000, income: 2500, amount: 0, baseIncome: 2500, multiplier: 1, era: 1, numberInEra: 7 },
+        "car-production": { basePrice: 1500000, income: 8000, amount: 0, baseIncome: 8000, multiplier: 1, era: 1, numberInEra: 8 },
     }
 };
 const itemHotkeys = [

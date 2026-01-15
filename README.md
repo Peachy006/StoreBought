@@ -15,7 +15,9 @@ Game Features
 
     [ ] child labour not loading first time its logging in
 
-    [ ]make it so upgrades have a custom message when hovering
+    [ ] make it so upgrades have a custom message when hovering
+
+    [ ] only show upgrades that you either have or is the next upgrade
 
     [ ] should we look into ascensions or do we go with the era theme, maybe ascenscions within the eras?
 
