@@ -6,6 +6,14 @@ function pushEraConfig(): void {
 
     for (const [key, item] of Object.entries(gameState.ITEMS)) {
         if (item.era === gameState.era) {
+            const previousItem = getItemKey(item.era, item.numberInEra - 1);
+            if (previousItem && gameState.ITEMS[previousItem].amount >= 1 || key === "child-worker" && gameState.events["child-worker-triggered"] ||
+            item.numberInEra === 1 || item.numberInEra === 2
+            ) {
+                console.log(previousItem);
+            } else {
+                continue;
+            }
             const productDiv = document.createElement("div");
             productDiv.className = "product locked";
             productDiv.setAttribute("data-product", key);

@@ -48,6 +48,7 @@ function handlePurchasing(itemNumber: number): void {
     }
     saveGame(); // Save on major event (purchase)
     checkForEvents();
+    pushEraConfig()
 }
 
 function unlockUpgrade(upgradeName: string): void {

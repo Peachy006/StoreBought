@@ -26,8 +26,12 @@ type ChoiceType = 'good' | 'evil';
 const overlay = document.getElementById('choice-overlay') as HTMLElement;
 
 
- //Call this function whenever you want the thingy to show up
 
+/**
+ * Shows the moral choice overlay with the given title and description.
+ * @param title
+ * @param description
+ */
 function showMoralChoice(title: string, description: string) {
     const titleEl = document.getElementById('choice-title')!;
     const descEl = document.getElementById('choice-desc')!;
@@ -39,8 +43,10 @@ function showMoralChoice(title: string, description: string) {
 }
 
 
- // Handles the logic after a button is clicked
-
+/**
+ * Handles the logic after a button is clicked.
+ * @param type
+ */
 function handleChoice(type: ChoiceType): void {
     console.log(`User chose the ${type} path.`);
 
